@@ -163,7 +163,7 @@ helm repo add kedacore https://kedacore.github.io/charts
 helm repo update
 helm install kedacore/keda --namespace keda --name keda
 # This is to wait that keda has enrolled the external metrics api  
-sleep 60
+sleep 120
 helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
 
 cat <<EOF | kubectl apply -f -
