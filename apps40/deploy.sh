@@ -157,13 +157,6 @@ az storage blob upload-batch --destination $BLOB_ENDPOINT --destination product-
 az storage blob upload-batch --destination $BLOB_ENDPOINT --destination product-list --source $tailwindWebImages/product-list --account-name $STORAGE
 az storage blob upload-batch --destination $BLOB_ENDPOINT --destination profiles-list --source $tailwindWebImages/profiles-list --account-name $STORAGE
 
-#
-printf "\n***Setting up scaling backend componets.***\n"
-helm repo add kedacore https://kedacore.github.io/charts
-helm repo update
-helm install kedacore/keda --namespace keda --name keda
-# This is to wait that keda has enrolled the external metrics api  
-sleep 120
 helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
 
 cat <<EOF | kubectl apply -f -
@@ -262,3 +255,11 @@ echo ""
 echo "Run the following to connect to the AKS cluster:"
 echo "az aks get-credentials --name $AKS_CLUSTER --resource-group $azureResourceGroup --admin"
 echo "******************************************************"
+
+
+#
+printf "\n***Setting up scaling backend componets.***\n"
+helm repo add kedacore https://kedacore.github.io/charts
+helm repo update
+helm install kedacore/keda --namespace keda --name keda
+# This is to wait that keda has enrolled the external metrics api  
